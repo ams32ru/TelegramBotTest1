@@ -48,6 +48,7 @@ public class BotService extends TelegramLongPollingBot {
     private void startCommandReceived(Long chatId, String name) {
 
         String answer = "Привет, " + name;
+        log.info("Приветствие пользователя " + name);
         sendMessage(chatId, answer);
 
     }
@@ -60,7 +61,7 @@ public class BotService extends TelegramLongPollingBot {
         try {
             execute(message);
         } catch (TelegramApiException e) {
-            throw new RuntimeException(e);
+            log.error("Error occurred: " + e.getMessage());
         }
 
     }
