@@ -1,29 +1,42 @@
 package com.Social.TelegramBotTest1.service;
 
-import ch.qos.logback.core.joran.conditional.IfAction;
 import com.Social.TelegramBotTest1.configuration.BotConfiguration;
 import com.Social.TelegramBotTest1.model.User;
 import com.Social.TelegramBotTest1.model.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.commands.SetMyCommands;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
+import org.telegram.telegrambots.meta.api.objects.commands.scope.BotCommandScopeDefault;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Component
 public class BotService extends TelegramLongPollingBot {
-    @Autowired
+
     private UserRepository userRepository;
     final BotConfiguration config;
 
-    public BotService (BotConfiguration config) {
+    public BotService(UserRepository userRepository, BotConfiguration config) {
+        this.userRepository = userRepository;
         this.config = config;
+        List<BotCommand> listOfCommands = new ArrayList<>();
+        listOfCommands.add(new BotCommand("/start", "Запустить бота"));
+        try {
+            this.execute(new SetMyCommands(listOfCommands, new BotCommandScopeDefault(), null));
+        } catch (TelegramApiException e) {
+            log.error("Error setting  bot command list: " + e);
+        }
+
     }
 
     @Override
@@ -57,18 +70,18 @@ public class BotService extends TelegramLongPollingBot {
     }
 
     private void registerUsers(Message msg) {
-            var chatId = msg.getChatId();
-            var chat = msg.getChat();
+        var chatId = msg.getChatId();
+        var chat = msg.getChat();
 
-            User user = new User();
+        User user = new User();
 
-            user.setChatId(chatId);
-            user.setFirstName(chat.getFirstName());
-            user.setLast_message_at(msg.getText());
-            user.setRegisterAt(new Timestamp(System.currentTimeMillis()));
+        user.setChatId(chatId);
+        user.setFirstName(chat.getFirstName());
+        user.setLastMessageAt(msg.getText());
+        user.setRegisterAt(LocalDateTime.now());
 
-            userRepository.save(user);
-            log.info("user saved: " + user);
+        userRepository.save(user);
+        log.info("user saved: " + user);
 
     }
 

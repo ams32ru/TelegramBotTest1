@@ -7,6 +7,7 @@ import lombok.Setter;
 
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity(name = "users_data")
 @Getter
@@ -19,7 +20,7 @@ public class User {
      */
     private String firstName;
 
-    private Timestamp registerAt;
+    private LocalDateTime registerAt;
 
-    private String last_message_at;
+    private String lastMessageAt;
 }
