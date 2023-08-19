@@ -1,16 +1,25 @@
 package com.Social.TelegramBotTest1.service;
 
+import ch.qos.logback.core.joran.conditional.IfAction;
 import com.Social.TelegramBotTest1.configuration.BotConfiguration;
+import com.Social.TelegramBotTest1.model.User;
+import com.Social.TelegramBotTest1.model.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import java.sql.Timestamp;
 
 @Slf4j
 @Component
 public class BotService extends TelegramLongPollingBot {
+    @Autowired
+    private UserRepository userRepository;
     final BotConfiguration config;
 
     public BotService (BotConfiguration config) {
@@ -35,13 +44,31 @@ public class BotService extends TelegramLongPollingBot {
 
             switch (messageText) {
                 case "/start":
+                    registerUsers(update.getMessage());
                     startCommandReceived(chatId, update.getMessage().getChat().getFirstName());
                     break;
+
                 default:
+                    registerUsers(update.getMessage());
                     sendMessage(chatId, "Изивини, не понял команду");
+                    log.info("Неизвестная команда, но пользователя сохраняем");
             }
         }
+    }
 
+    private void registerUsers(Message msg) {
+            var chatId = msg.getChatId();
+            var chat = msg.getChat();
+
+            User user = new User();
+
+            user.setChatId(chatId);
+            user.setFirstName(chat.getFirstName());
+            user.setLast_message_at(msg.getText());
+            user.setRegisterAt(new Timestamp(System.currentTimeMillis()));
+
+            userRepository.save(user);
+            log.info("user saved: " + user);
 
     }
 
