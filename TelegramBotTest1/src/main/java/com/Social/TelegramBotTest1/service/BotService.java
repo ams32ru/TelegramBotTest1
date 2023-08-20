@@ -2,7 +2,7 @@ package com.Social.TelegramBotTest1.service;
 
 import com.Social.TelegramBotTest1.configuration.BotConfiguration;
 import com.Social.TelegramBotTest1.model.User;
-import com.Social.TelegramBotTest1.model.UserRepository;
+import com.Social.TelegramBotTest1.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -14,7 +14,6 @@ import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.objects.commands.scope.BotCommandScopeDefault;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
