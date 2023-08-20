@@ -16,6 +16,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
@@ -68,6 +69,7 @@ public class BotService extends TelegramLongPollingBot {
         }
     }
 
+
     private void registerUsers(Message msg) {
         var chatId = msg.getChatId();
         var chat = msg.getChat();
@@ -102,6 +104,5 @@ public class BotService extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             log.error("Error occurred: " + e.getMessage());
         }
-
     }
 }

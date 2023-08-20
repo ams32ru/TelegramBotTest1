@@ -2,6 +2,7 @@ package com.Social.TelegramBotTest1.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,8 +12,9 @@ import java.time.LocalDateTime;
 @Entity(name = "daily_domains" )
 @Getter
 @Setter
-public class Domains {
+public class Domain {
     @Id
+    @GeneratedValue
     @Column(name = "domains_id")
     private Long domainsId;
     @Column(name = "domainname")

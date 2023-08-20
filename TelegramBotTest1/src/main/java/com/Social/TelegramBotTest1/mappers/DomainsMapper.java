@@ -1,7 +1,7 @@
 package com.Social.TelegramBotTest1.mappers;
 
 import com.Social.TelegramBotTest1.dto.DomainsDto;
-import com.Social.TelegramBotTest1.model.Domains;
+import com.Social.TelegramBotTest1.model.Domain;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -11,7 +11,7 @@ import java.util.List;
 public interface DomainsMapper {
     DomainsMapper INSTANCE = Mappers.getMapper(DomainsMapper.class);
 
-    DomainsDto toDto(Domains domains);
+    DomainsDto toDto(Domain domains);
 
-    Domains toEntity(List<DomainsDto> dto);
+    Domain toEntity(List<DomainsDto> dto);
 }

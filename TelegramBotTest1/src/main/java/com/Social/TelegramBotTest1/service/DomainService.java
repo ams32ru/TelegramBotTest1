@@ -2,18 +2,15 @@ package com.Social.TelegramBotTest1.service;
 
 import com.Social.TelegramBotTest1.dto.DomainsDto;
 import com.Social.TelegramBotTest1.mappers.DomainsMapper;
-import com.Social.TelegramBotTest1.model.Domains;
 import com.Social.TelegramBotTest1.repository.DomainsRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jdk.dynalink.linker.LinkerServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.List;
 
