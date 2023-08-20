@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface DomainsRepository extends CrudRepository<Domains, Long> {
-    void save(List<DomainsDto> domainsDtos);
+
 }
