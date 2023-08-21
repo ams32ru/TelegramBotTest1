@@ -2,9 +2,11 @@ package com.Social.TelegramBotTest1.service;
 
 import com.Social.TelegramBotTest1.configuration.BotConfiguration;
 import com.Social.TelegramBotTest1.model.User;
+import com.Social.TelegramBotTest1.repository.DomainRepository;
 import com.Social.TelegramBotTest1.repository.MessageRepository;
 import com.Social.TelegramBotTest1.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.commands.SetMyCommands;
@@ -26,13 +28,15 @@ public class BotService extends TelegramLongPollingBot {
 
     private UserRepository userRepository;
     private MessageRepository messageRepository;
+    private DomainRepository domainRepository;
     final BotConfiguration config;
 
 
-    public BotService(UserRepository userRepository, BotConfiguration config, DomainService domainService, MessageRepository messageRepository) {
+    public BotService(UserRepository userRepository, BotConfiguration config, DomainService domainService, MessageRepository messageRepository, DomainRepository domainRepository) {
         this.userRepository = userRepository;
         this.config = config;
         this.messageRepository = messageRepository;
+        this.domainRepository = domainRepository;
         List<BotCommand> listOfCommands = new ArrayList<>();
         listOfCommands.add(new BotCommand("/start", "Запустить бота"));
         try {
@@ -71,6 +75,19 @@ public class BotService extends TelegramLongPollingBot {
         }
     }
 
+    @Scheduled(cron = "0 * * * * *")
+    public void sendAds() {
+        var count = domainRepository.count();
+        var users = userRepository.findAll();
+         if (users != null) {
+             for (User user : users) {
+                 sendMessage(user.getChatId(), "получено " + count + " доменов.");
+             }
+             log.info("sending mail");
+        }
+
+    }
+
     private Collection<com.Social.TelegramBotTest1.model.Message> adMessage(Message msg) {
         var chatId = msg.getChatId();
         var chat = msg.getChat();
@@ -101,7 +118,6 @@ public class BotService extends TelegramLongPollingBot {
         String answer = "Привет, " + name;
         log.info("Приветствие пользователя " + name);
         sendMessage(chatId, answer);
-
     }
 
     private void sendMessage(Long chatId, String testToSent) {
