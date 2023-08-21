@@ -3,7 +3,6 @@ package com.Social.TelegramBotTest1.service;
 import com.Social.TelegramBotTest1.dto.DomainDto;
 import com.Social.TelegramBotTest1.mappers.DomainMapper;
 import com.Social.TelegramBotTest1.repository.DomainRepository;
-import com.Social.TelegramBotTest1.repository.UserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -22,23 +21,19 @@ import java.util.List;
 public class DomainService {
     private final ObjectMapper objectMapper = new ObjectMapper()
             .registerModule(new JavaTimeModule());
-    final private DomainRepository domainsRepository;
-    final private UserRepository userRepository;
-    final private static String URL = "https://backorder.ru/json/?order=desc&expired=1&by=hotness&page=1&items=50";
+    private final DomainRepository domainsRepository;
+    private final static String URL = "https://backorder.ru/json/?order=desc&expired=1&by=hotness&page=1&items=50";
 
-    public DomainService(DomainRepository domainsRepository,  UserRepository userRepository) {
+    public DomainService(DomainRepository domainsRepository) {
         this.domainsRepository = domainsRepository;
-        this.userRepository = userRepository;
     }
 
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "@daily")
     public void getDomain() {
         List<DomainDto> domainsDtos;
-
         {
             try {
                 domainsDtos = objectMapper.readValue(new URL(URL), new TypeReference<List<DomainDto>>() {
-
                 });
                 domainsRepository.save(DomainMapper.INSTANCE.toEntity(domainsDtos));
             } catch (IOException e) {

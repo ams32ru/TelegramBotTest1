@@ -7,8 +7,6 @@ import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
-
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
@@ -20,7 +18,7 @@ public class User {
     @GeneratedValue
     private Long chatId;
     /*
-    Решил не перегружать таблицу данными пильзователя, оставил только имя, так как в телеграм оно вроде обязательно
+    Решил не добавлять много полей для пользователя, так как не влияет на тз
      */
     private String firstName;
 

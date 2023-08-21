@@ -20,16 +20,17 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
 @Component
 public class BotService extends TelegramLongPollingBot {
 
-    private UserRepository userRepository;
-    private MessageRepository messageRepository;
-    private DomainRepository domainRepository;
-    final BotConfiguration config;
+    private final UserRepository userRepository;
+    private final MessageRepository messageRepository;
+    private final DomainRepository domainRepository;
+    private final BotConfiguration config;
 
 
     public BotService(UserRepository userRepository, BotConfiguration config, DomainService domainService, MessageRepository messageRepository, DomainRepository domainRepository) {
@@ -69,32 +70,34 @@ public class BotService extends TelegramLongPollingBot {
 
                 default:
                     registerUsers(update.getMessage());
-                    sendMessage(chatId, "Изивини, не понял команду");
-                    log.info("Неизвестная команда, но пользователя сохраняем");
+                    sendMessage(chatId, "Неизвестная команда");
+                    log.info("Unknown command");
             }
         }
     }
 
-    @Scheduled(cron = "0 0 * * * *")
+    @Scheduled(cron = "@daily")
     public void sendAds() {
         var count = domainRepository.count();
         var users = userRepository.findAll();
-         if (users != null) {
-             for (User user : users) {
-                 sendMessage(user.getChatId(), "получено " + count + " доменов.");
-             }
-             log.info("sending mail");
+        for (User user : users) {
+            sendMessage(user.getChatId(), "получено " + count + " доменов.");
         }
-
+        log.info("sending mail");
     }
 
     private Collection<com.Social.TelegramBotTest1.model.Message> adMessage(Message msg) {
         var chatId = msg.getChatId();
         var chat = msg.getChat();
 
+
         com.Social.TelegramBotTest1.model.Message message = new com.Social.TelegramBotTest1.model.Message();
+        message.setId(chatId);
+        message.setTextMessages(msg.getText());
         messageRepository.save(message);
-        return null;
+        log.info("message saved");
+
+        return (Collection<com.Social.TelegramBotTest1.model.Message>) Collections.singleton(message);
     }
 
     private void registerUsers(Message msg) {
@@ -116,7 +119,7 @@ public class BotService extends TelegramLongPollingBot {
     private void startCommandReceived(Long chatId, String name) {
 
         String answer = "Привет, " + name;
-        log.info("Приветствие пользователя " + name);
+        log.info("User greeting " + name);
         sendMessage(chatId, answer);
     }
 
@@ -128,7 +131,7 @@ public class BotService extends TelegramLongPollingBot {
         try {
             execute(message);
         } catch (TelegramApiException e) {
-            log.error("Error occurred: " + e.getMessage());
+            log.error(e.getMessage(), e);
         }
     }
 }
