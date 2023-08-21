@@ -2,6 +2,7 @@ package com.Social.TelegramBotTest1.service;
 
 import com.Social.TelegramBotTest1.configuration.BotConfiguration;
 import com.Social.TelegramBotTest1.model.User;
+import com.Social.TelegramBotTest1.repository.MessageRepository;
 import com.Social.TelegramBotTest1.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -24,11 +25,14 @@ import java.util.List;
 public class BotService extends TelegramLongPollingBot {
 
     private UserRepository userRepository;
+    private MessageRepository messageRepository;
     final BotConfiguration config;
 
-    public BotService(UserRepository userRepository, BotConfiguration config) {
+
+    public BotService(UserRepository userRepository, BotConfiguration config, DomainService domainService, MessageRepository messageRepository) {
         this.userRepository = userRepository;
         this.config = config;
+        this.messageRepository = messageRepository;
         List<BotCommand> listOfCommands = new ArrayList<>();
         listOfCommands.add(new BotCommand("/start", "Запустить бота"));
         try {
@@ -36,7 +40,6 @@ public class BotService extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             log.error("Error setting  bot command list: " + e);
         }
-
     }
 
     @Override
@@ -54,7 +57,6 @@ public class BotService extends TelegramLongPollingBot {
         if (update.hasMessage() && update.getMessage().hasText()) {
             String messageText = update.getMessage().getText();
             long chatId = update.getMessage().getChatId();
-
             switch (messageText) {
                 case "/start":
                     registerUsers(update.getMessage());
@@ -69,6 +71,14 @@ public class BotService extends TelegramLongPollingBot {
         }
     }
 
+    private Collection<com.Social.TelegramBotTest1.model.Message> adMessage(Message msg) {
+        var chatId = msg.getChatId();
+        var chat = msg.getChat();
+
+        com.Social.TelegramBotTest1.model.Message message = new com.Social.TelegramBotTest1.model.Message();
+        messageRepository.save(message);
+        return null;
+    }
 
     private void registerUsers(Message msg) {
         var chatId = msg.getChatId();
@@ -80,7 +90,7 @@ public class BotService extends TelegramLongPollingBot {
         user.setFirstName(chat.getFirstName());
         user.setLastMessageAt(msg.getText());
         user.setRegisterAt(LocalDateTime.now());
-
+        user.setMessages(adMessage(msg));
         userRepository.save(user);
         log.info("user saved: " + user);
 

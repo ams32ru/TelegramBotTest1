@@ -24,7 +24,7 @@ public class DomainService {
 
 
     @Scheduled(cron = "@daily")
-    public void getDomain() {
+    public  void getDomain() {
         List<DomainsDto> domainsDtos;
         {
             try {
