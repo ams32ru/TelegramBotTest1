@@ -1,9 +1,6 @@
 package com.Social.TelegramBotTest1.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +12,7 @@ import java.util.Collection;
 @Setter
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long chatId;
     /*
     Решил не добавлять много полей для пользователя, так как не влияет на тз

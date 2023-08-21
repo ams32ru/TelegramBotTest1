@@ -90,9 +90,7 @@ public class BotService extends TelegramLongPollingBot {
         var chatId = msg.getChatId();
         var chat = msg.getChat();
 
-
         com.Social.TelegramBotTest1.model.Message message = new com.Social.TelegramBotTest1.model.Message();
-        message.setId(chatId);
         message.setTextMessages(msg.getText());
         messageRepository.save(message);
         log.info("message saved");
