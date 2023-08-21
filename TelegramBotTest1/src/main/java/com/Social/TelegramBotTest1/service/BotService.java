@@ -75,7 +75,7 @@ public class BotService extends TelegramLongPollingBot {
         }
     }
 
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "0 0 * * * *")
     public void sendAds() {
         var count = domainRepository.count();
         var users = userRepository.findAll();

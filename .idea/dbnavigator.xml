@@ -23,9 +23,9 @@
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="c77eefd4-c334-43ea-baab-1d7484a19390" dataset="public.users_data" active-filter-id="" />
-    <filter-actions connection-id="c77eefd4-c334-43ea-baab-1d7484a19390" dataset="public.daily_domains" active-filter-id="" />
-    <filter-actions connection-id="c77eefd4-c334-43ea-baab-1d7484a19390" dataset="public.message" active-filter-id="" />
+    <filter-actions connection-id="c77eefd4-c334-43ea-baab-1d7484a19390" dataset="public.users_data" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="c77eefd4-c334-43ea-baab-1d7484a19390" dataset="public.daily_domains" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="c77eefd4-c334-43ea-baab-1d7484a19390" dataset="public.message" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />

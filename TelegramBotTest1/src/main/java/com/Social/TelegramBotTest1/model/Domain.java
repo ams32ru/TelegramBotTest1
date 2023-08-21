@@ -1,5 +1,6 @@
 package com.Social.TelegramBotTest1.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +8,7 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity(name = "daily_domains" )
@@ -36,7 +38,8 @@ public class Domain {
     @Column(name = "old")
     private int old;
     @Column(name = "delete_date")
-    private LocalDateTime deleteDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate deleteDate;
     @Column(name = "rkn")
     private boolean rkn;
     @Column(name = "judicial")

@@ -3,6 +3,7 @@ package com.Social.TelegramBotTest1.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 @Data
 public class DomainDto {
@@ -19,7 +20,7 @@ public class DomainDto {
     private String registrar;
     private int old;
     @JsonProperty("delete_date")
-    private LocalDateTime deleteDate;
+    private LocalDate deleteDate;
     private boolean rkn;
     private boolean judicial;
     private boolean block;
