@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: DEV-2
+      author: sobolev
+      changes:
+        - createTable:
+            tableName: message
+            columns:
+              - column:
+                  name: id
+                  type: Long
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: text_messages
+                  type: String
+              - column:
+                  name: user_id
+                  type: Long
+              - addForeignKeyConstraint:
+                  baseTableName: message
+                  baseColumnNames: user_id
+                  referencedTableName: user
+                  referencedColumnNames: id

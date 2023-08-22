@@ -6,6 +6,7 @@ import com.Social.TelegramBotTest1.repository.DomainRepository;
 import com.Social.TelegramBotTest1.repository.MessageRepository;
 import com.Social.TelegramBotTest1.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.IClassFileProvider;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -62,14 +63,12 @@ public class BotService extends TelegramLongPollingBot {
         if (update.hasMessage() && update.getMessage().hasText()) {
             String messageText = update.getMessage().getText();
             long chatId = update.getMessage().getChatId();
+            registerUsers(update.getMessage());
             switch (messageText) {
                 case "/start":
-                    registerUsers(update.getMessage());
                     startCommandReceived(chatId, update.getMessage().getChat().getFirstName());
                     break;
-
                 default:
-                    registerUsers(update.getMessage());
                     sendMessage(chatId, "Неизвестная команда");
                     log.info("Unknown command");
             }

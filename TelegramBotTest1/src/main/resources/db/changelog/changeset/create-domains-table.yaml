@@ -1,0 +1,54 @@
+databaseChangeLog:
+  - changeSet:
+      id: DEV-3
+      author: sobolev
+      changes:
+        - createTable:
+            tableName: daily_domains
+            columns:
+              - column:
+                  name: domains_id
+                  type: Long
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: domainname
+                  type: String
+              - column:
+                  name: hotness
+                  type: integer
+              - column:
+                  name: price
+                  type: integer
+              - column:
+                  name: x_value
+                  type: integer
+              - column:
+                  name: yandex_tic
+                  type: integer
+              - column:
+                  name: links
+                  type: integer
+              - column:
+                  name: visitors
+                  type: integer
+              - column:
+                  name: registrar
+                  type: String
+              - column:
+                  name: old
+                  type: integer
+              - column:
+                  name: delete_date
+                  type: LocalData
+              - column:
+                  name: rkn
+                  type: boolean
+              - column:
+                  name: judicial
+                  type: boolean
+                  column:
+                    name: block
+                    type: boolean

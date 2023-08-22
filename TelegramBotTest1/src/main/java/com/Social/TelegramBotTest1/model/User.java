@@ -13,14 +13,18 @@ import java.util.Collection;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private Long chatId;
     /*
     Решил не добавлять много полей для пользователя, так как не влияет на тз
      */
     private String firstName;
 
+    @Column(name = "register_at")
     private LocalDateTime registerAt;
 
+    @Column(name = "last_message_at")
     private String lastMessageAt;
 
     @OneToMany(mappedBy = "user")
