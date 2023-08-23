@@ -4,7 +4,7 @@ databaseChangeLog:
       author: sobolev
       changes:
         - createTable:
-            tableName: user
+            tableName: users_data
             columns:
               - column:
                   name: id
@@ -14,13 +14,13 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: chatId
+                  name: chat_id
                   type: bigint
                   constraints:
                     nullable: false
               - column:
-                  name: firstName
-                  type: character
+                  name: first_name
+                  type: varchar(255)
                   constraints:
                     nullable: false
               - column:
@@ -30,6 +30,6 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: last_message_at
-                  type: character
+                  type: varchar(255)
                   constraints:
                     nullable: false

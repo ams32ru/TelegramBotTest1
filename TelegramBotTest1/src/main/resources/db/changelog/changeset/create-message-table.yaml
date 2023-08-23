@@ -15,7 +15,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: text_messages
-                  type: character
+                  type: varchar(255)
               - column:
                   name: user_id
                   type: bigint

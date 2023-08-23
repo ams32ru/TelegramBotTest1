@@ -15,10 +15,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "chat_id")
     private Long chatId;
     /*
     Решил не добавлять много полей для пользователя, так как не влияет на тз
      */
+    @Column(name = "first_name")
     private String firstName;
 
     @Column(name = "register_at")

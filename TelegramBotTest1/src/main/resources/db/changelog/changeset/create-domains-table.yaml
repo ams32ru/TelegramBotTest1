@@ -15,7 +15,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: domainname
-                  type: character
+                  type: varchar(255)
               - column:
                   name: hotness
                   type: integer
@@ -36,7 +36,7 @@ databaseChangeLog:
                   type: integer
               - column:
                   name: registrar
-                  type: character
+                  type: varchar(255)
               - column:
                   name: old
                   type: integer
