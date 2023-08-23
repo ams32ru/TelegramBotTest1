@@ -8,14 +8,14 @@ databaseChangeLog:
             columns:
               - column:
                   name: domains_id
-                  type: Long
+                  type: bigint
                   autoIncrement: true
                   constraints:
                     primaryKey: true
                     nullable: false
               - column:
                   name: domainname
-                  type: String
+                  type: character
               - column:
                   name: hotness
                   type: integer
@@ -36,19 +36,19 @@ databaseChangeLog:
                   type: integer
               - column:
                   name: registrar
-                  type: String
+                  type: character
               - column:
                   name: old
                   type: integer
               - column:
                   name: delete_date
-                  type: LocalData
+                  type: date
               - column:
                   name: rkn
                   type: boolean
               - column:
                   name: judicial
                   type: boolean
-                  column:
+              - column:
                     name: block
                     type: boolean

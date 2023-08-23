@@ -8,17 +8,17 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: Long
+                  type: bigint
                   autoIncrement: true
                   constraints:
                     primaryKey: true
                     nullable: false
               - column:
                   name: text_messages
-                  type: String
+                  type: character
               - column:
                   name: user_id
-                  type: Long
+                  type: bigint
               - addForeignKeyConstraint:
                   baseTableName: message
                   baseColumnNames: user_id
