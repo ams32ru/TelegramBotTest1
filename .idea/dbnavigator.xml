@@ -20,7 +20,11 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="c77eefd4-c334-43ea-baab-1d7484a19390" object-ref="schemas/public/tables/databasechangeloglock" />
+      <object connection-id="c77eefd4-c334-43ea-baab-1d7484a19390" object-ref="schemas/public/tables/message" />
+      <object connection-id="c77eefd4-c334-43ea-baab-1d7484a19390" object-ref="schemas/public/tables/users_data" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="c77eefd4-c334-43ea-baab-1d7484a19390" dataset="public.users_data" active-filter-id="EMPTY_FILTER" />

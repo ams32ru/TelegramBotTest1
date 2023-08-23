@@ -7,6 +7,7 @@ import com.Social.TelegramBotTest1.repository.MessageRepository;
 import com.Social.TelegramBotTest1.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.weaver.IClassFileProvider;
+import org.mapstruct.control.MappingControl;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -86,8 +87,6 @@ public class BotService extends TelegramLongPollingBot {
     }
 
     private Collection<com.Social.TelegramBotTest1.model.Message> adMessage(Message msg) {
-        var chatId = msg.getChatId();
-        var chat = msg.getChat();
 
         com.Social.TelegramBotTest1.model.Message message = new com.Social.TelegramBotTest1.model.Message();
         message.setTextMessages(msg.getText());
@@ -101,16 +100,23 @@ public class BotService extends TelegramLongPollingBot {
         var chatId = msg.getChatId();
         var chat = msg.getChat();
 
-        User user = new User();
-
-        user.setChatId(chatId);
-        user.setFirstName(chat.getFirstName());
-        user.setLastMessageAt(msg.getText());
-        user.setRegisterAt(LocalDateTime.now());
-        user.setMessages(adMessage(msg));
-        userRepository.save(user);
-        log.info("user saved: " + user);
-
+        User persistentUser = userRepository.findUserByChatId(msg.getChatId());
+        if (persistentUser == null) {
+            User user = new User();
+            user.setChatId(chatId);
+            user.setFirstName(chat.getFirstName());
+            user.setLastMessageAt(msg.getText());
+            user.setRegisterAt(LocalDateTime.now());
+            user.setMessages(adMessage(msg));
+            userRepository.save(user);
+            log.info("user saved: " + user);
+        }
+        else {
+            persistentUser.setFirstName(chat.getFirstName());
+            persistentUser.setLastMessageAt(msg.getText());
+            userRepository.save(persistentUser);
+            log.info("user update: ");
+        }
     }
 
     private void startCommandReceived(Long chatId, String name) {
